@@ -42,7 +42,15 @@ public class ProductController {
                     LocalDateTime.now()), HttpStatus.BAD_REQUEST);
         }
         Seller seller = sellerDbService.findById(productDTO.getSellerId());
+        if (seller == null) {
+            return new ResponseEntity<>(new ApiError("Seller doesn't exist", LocalDateTime.now()),
+                    HttpStatus.BAD_REQUEST);
+        }
         Category category = categoryDbService.findByName(productDTO.getCategoryName());
+        if (category == null) {
+            return new ResponseEntity<>(new ApiError("Category doesn't exist", LocalDateTime.now()),
+                    HttpStatus.BAD_REQUEST);
+        }
         Product productToBeSaved = Product.builder()
                 .name(productDTO.getName())
                 .seller(seller)

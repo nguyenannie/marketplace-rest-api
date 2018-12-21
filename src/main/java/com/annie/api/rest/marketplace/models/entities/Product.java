@@ -1,6 +1,7 @@
 package com.annie.api.rest.marketplace.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,5 +35,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     @JsonBackReference
     private Category category;
+
+    @JsonIgnore
+    public int getRevenue() {
+        return salesUnit * price;
+    }
 
 }

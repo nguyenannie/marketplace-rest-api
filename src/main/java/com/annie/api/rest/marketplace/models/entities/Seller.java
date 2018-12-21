@@ -1,5 +1,6 @@
 package com.annie.api.rest.marketplace.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -32,4 +33,14 @@ public class Seller {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
     @JsonManagedReference
     private List<Rating> ratings;
+
+    @JsonIgnore
+    public int getRevenue() {
+        return products.stream().mapToInt(Product::getRevenue).sum();
+    }
+
+    @JsonIgnore
+    public int getAverageRating() {
+        return ratings.stream().mapToInt(Rating::getRate).sum()/ratings.size();
+    }
 }

@@ -32,7 +32,7 @@ public class BuyingController {
         }
         int currentStock = productToBuy.getStock();
         if (productToBuy.getStock() < quantity) {
-            new ResponseEntity<>(new ApiError("Not enough stock. Current stock is " + currentStock,
+            return new ResponseEntity<>(new ApiError("Not enough stock. Current stock is " + currentStock,
                     LocalDateTime.now()), HttpStatus.BAD_REQUEST);
         }
         productToBuy.setStock(currentStock - quantity);
