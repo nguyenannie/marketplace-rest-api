@@ -26,7 +26,7 @@ public class Product {
     @Column(nullable = false)
     private int stock;
     private int salesUnit;
-    private int timesQueried = 0;
+    @Builder.Default private int timesQueried = 0;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     @JsonBackReference

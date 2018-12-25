@@ -40,7 +40,15 @@ public class Seller {
     }
 
     @JsonIgnore
+    public int getSalesUnit() {
+        return products.stream().mapToInt(Product::getSalesUnit).sum();
+    }
+
+    @JsonIgnore
     public int getAverageRating() {
+        if (ratings.size() == 0) {
+            return 0;
+        }
         return ratings.stream().mapToInt(Rating::getRate).sum()/ratings.size();
     }
 }

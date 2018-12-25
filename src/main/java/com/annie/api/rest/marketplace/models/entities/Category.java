@@ -1,5 +1,6 @@
 package com.annie.api.rest.marketplace.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -23,4 +24,9 @@ public class Category {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     @JsonManagedReference
     private List<Product> products;
+
+    @JsonIgnore
+    public int getRevenue() {
+        return products.stream().mapToInt(Product::getRevenue).sum();
+    }
 }

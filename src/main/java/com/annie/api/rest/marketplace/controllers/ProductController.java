@@ -2,6 +2,7 @@ package com.annie.api.rest.marketplace.controllers;
 
 import com.annie.api.rest.marketplace.models.dtos.ApiError;
 import com.annie.api.rest.marketplace.models.dtos.ProductDTO;
+import com.annie.api.rest.marketplace.models.dtos.ProductsStatDTO;
 import com.annie.api.rest.marketplace.models.entities.Category;
 import com.annie.api.rest.marketplace.models.entities.Product;
 import com.annie.api.rest.marketplace.models.entities.Seller;
@@ -11,6 +12,10 @@ import com.annie.api.rest.marketplace.services.implementations.SellerDbServiceIm
 import com.annie.api.rest.marketplace.services.interfaces.CategoryDbService;
 import com.annie.api.rest.marketplace.services.interfaces.ProductDbService;
 import com.annie.api.rest.marketplace.services.interfaces.SellerDbService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@Api(description = "Product Operations", produces = "application/json", tags = { "Product" })
 public class ProductController {
 
     private final ProductDbService productDbService;
@@ -35,7 +42,12 @@ public class ProductController {
         this.categoryDbService = categoryDbServiceImpl;
     }
 
-    @PostMapping("/product")
+    @ApiOperation(value = "Create Product", tags = { "Product" })
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Product.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = ApiError.class)
+    })
+    @PostMapping(value = "/product", produces = "application/json")
     public ResponseEntity<Object> saveOneProduct(@RequestBody ProductDTO productDTO) {
         if (!productDTO.isValid()) {
             return new ResponseEntity<>(new ApiError("Invalid request body, please check the documentation!",
@@ -64,22 +76,26 @@ public class ProductController {
         return new ResponseEntity<>(productToBeSaved, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products/all")
+    @ApiOperation(value = "Get All Products", tags = { "Product" })
+    @GetMapping(value = "/products", produces = "application/json")
     public List<Product> getAllProducts() {
         return productDbService.findAll();
     }
 
-    @GetMapping("/products/seller")
-    public ResponseEntity<List<Product>> getProductsBySeller(@RequestParam(value = "id") long sellerId) {
-        Seller seller = sellerDbService.findById(sellerId);
+    @ApiOperation(value = "Get All Products Belonged to A Seller", tags = { "Product" })
+    @GetMapping(value = "/products/seller/{id}", produces = "application/json")
+    public ResponseEntity<List<ProductsStatDTO>> getProductsBySeller(@PathVariable long id) {
+        Seller seller = sellerDbService.findById(id);
         if (seller == null) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(seller.getProducts(), HttpStatus.OK);
+        return new ResponseEntity<>(seller.getProducts().stream()
+                .map(ProductsStatDTO::new).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping("/product")
-    public ResponseEntity<Product> getProductById(@RequestParam(value = "id") long id) {
+    @ApiOperation(value = "Get Product", tags = { "Product" })
+    @GetMapping(value = "/product/{id}", produces = "application/json")
+    public ResponseEntity<Product> getProductById(@PathVariable long id) {
         Product productToGet = productDbService.findById(id);
         if (productToGet == null) {
             return ResponseEntity.notFound().build();
@@ -89,8 +105,9 @@ public class ProductController {
         return new ResponseEntity<>(productToGet, HttpStatus.OK);
     }
 
-    @DeleteMapping("/product")
-    public ResponseEntity<Product> deleteProductById(@RequestParam(value = "id") long id) {
+    @ApiOperation(value = "Delete Product", tags = { "Product" })
+    @DeleteMapping(value = "/product/{id}", produces = "application/json")
+    public ResponseEntity<Product> deleteProductById(@PathVariable long id) {
         Product productToDelete = productDbService.findById(id);
         if (productToDelete == null) {
             return ResponseEntity.notFound().build();
@@ -99,9 +116,11 @@ public class ProductController {
         return new ResponseEntity<>(productToDelete, HttpStatus.OK);
     }
 
-    @PutMapping("/product")
-    public ResponseEntity<Object> modifyProductById(@RequestParam(value = "id") long id,
-                                                     @RequestBody ProductDTO productDTO) {
+    @ApiOperation(value = "Modify Product", tags = { "Product" })
+    @ApiResponse(code = 200, message = "Modified successfully", response = Product.class)
+    @PutMapping(value = "/product/{id}", produces = "application/json")
+    public ResponseEntity<Object> modifyProductById(@PathVariable long id,
+                                                    @RequestBody ProductDTO productDTO) {
         Product productToModify = productDbService.findById(id);
         Category categoryToModify = categoryDbService.findByName(productDTO.getCategoryName());
         if (productToModify == null) {
@@ -120,6 +139,6 @@ public class ProductController {
         productDbService.save(productToModify);
         categoryDbService.save(categoryToModify);
 
-        return new ResponseEntity<>(productToModify, HttpStatus.CREATED);
+        return new ResponseEntity<>(productToModify, HttpStatus.OK);
     }
 }
