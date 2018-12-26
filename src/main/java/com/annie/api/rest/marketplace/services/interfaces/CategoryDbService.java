@@ -11,5 +11,5 @@ public interface CategoryDbService {
     List<Category> findAll();
     Category findByName(String name);
     void save(Category category);
-
+    void delete(Category category);
 }

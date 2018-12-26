@@ -11,6 +11,7 @@ public class SellerStatDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private double averageRating;
     private int salesUnit;
     private int revenue;
 
@@ -19,6 +20,7 @@ public class SellerStatDTO {
         this.firstName = seller.getFirstName();
         this.lastName = seller.getLastName();
         this.email = seller.getEmail();
+        this.averageRating = seller.getAverageRating();
         this.salesUnit = seller.getSalesUnit();
         this.revenue = seller.getRevenue();
     }

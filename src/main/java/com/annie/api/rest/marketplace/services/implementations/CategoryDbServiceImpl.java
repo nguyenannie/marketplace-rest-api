@@ -32,4 +32,9 @@ public class CategoryDbServiceImpl implements CategoryDbService {
     public void save(Category category) {
         categoryRepo.save(category);
     }
+
+    @Override
+    public void delete(Category category) {
+        categoryRepo.delete(category);
+    }
 }

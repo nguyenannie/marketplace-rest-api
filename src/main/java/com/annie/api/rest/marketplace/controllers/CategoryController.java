@@ -35,8 +35,12 @@ public class CategoryController {
 
     @ApiOperation(value = "Get Category", tags = { "Category" })
     @GetMapping(value = "/category/{name}", produces = "application/json")
-    public Category getCategory(@PathVariable String name) {
-        return categoryDbService.findByName(name);
+    public ResponseEntity<Category> getCategory(@PathVariable String name) {
+        Category categoryToGet = categoryDbService.findByName(name);
+        if(categoryToGet == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(categoryToGet, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Create Category", tags = { "Category" })
@@ -53,5 +57,17 @@ public class CategoryController {
         Category categoryToBeSaved = Category.builder().name(name).build();
         categoryDbService.save(categoryToBeSaved);
         return new ResponseEntity<>(categoryToBeSaved, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Delete Category", tags = { "Category" })
+    @ApiResponse(code = 404, message = "Not Found")
+    @DeleteMapping(value = "/category/{name}", produces = "application/json")
+    public ResponseEntity<Object> deleteCategory(@PathVariable String name) {
+        Category categoryToDelete = categoryDbService.findByName(name);
+        if (categoryToDelete == null) {
+            return ResponseEntity.notFound().build();
+        }
+        categoryDbService.delete(categoryToDelete);
+        return new ResponseEntity<>(categoryToDelete, HttpStatus.OK);
     }
 }
