@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class StatisticsController {
     @ApiOperation(value = "List Products With Sales Data", tags = { "Statistics" })
     @GetMapping(value = "/products/salesData", produces = "application/json")
     public List<ProductsStatDTO> getProductsWithSalesData() {
-        List<Product> products = productDbService.findAll();
+        List<Product> products = (productDbService.findAll() == null)? new ArrayList<>() : productDbService.findAll();
         return products.stream().map(ProductsStatDTO::new).collect(Collectors.toList());
     }
 
@@ -63,15 +64,15 @@ public class StatisticsController {
     @ApiOperation(value = "List Sellers With Sales Data", tags = { "Statistics" })
     @GetMapping(value = "/sellers/salesData", produces = "application/json")
     public List<SellerStatDTO> getListSellersWithSalesData() {
-        List<Seller> sellers = sellerDbService.findAll();
+        List<Seller> sellers = (sellerDbService.findAll() == null) ? new ArrayList<>() : sellerDbService.findAll();
         return sellers.stream().map(SellerStatDTO::new).collect(Collectors.toList());
     }
 
     @ApiOperation(value = "Order List of Sellers by Average Rating", tags = { "Statistics" })
     @GetMapping(value = "/sellers/rating", produces = "application/json")
     public ResponseEntity<List<SellerStatDTO>> getSellersByRating(@RequestParam(value = "order") String order) {
-        List<SellerStatDTO> sellerStatDTOS = sellerDbService.findAll().stream().map(SellerStatDTO::new)
-                .collect(Collectors.toList());
+        List<Seller> sellers = (sellerDbService.findAll() == null) ? new ArrayList<>() : sellerDbService.findAll();
+        List<SellerStatDTO> sellerStatDTOS = sellers.stream().map(SellerStatDTO::new).collect(Collectors.toList());
         Optional<List<SellerStatDTO>> sortedSellers = sortList(order, sellerStatDTOS, SellerStatDTO::getAverageRating);
         return toResponse(sortedSellers);
     }
@@ -79,7 +80,7 @@ public class StatisticsController {
     @ApiOperation(value = "List Top 5 Sellers by Total Revenue", tags = { "Statistics" })
     @GetMapping(value = "/sellers/top5Revenue", produces = "application/json")
     public List<SellerStatDTO> getTop5RevenueSellers() {
-        List<Seller> sellers = sellerDbService.findAll();
+        List<Seller> sellers = (sellerDbService.findAll() == null) ? new ArrayList<>() : sellerDbService.findAll();
         sellers.sort(Comparator.comparing(Seller::getRevenue).reversed());
         List<SellerStatDTO> sellerSalesDTOS = sellers.stream().map(SellerStatDTO::new).collect(Collectors.toList());
         if (sellerSalesDTOS.size() < 5) {
@@ -91,7 +92,7 @@ public class StatisticsController {
     @ApiOperation(value = "List Top 5 Most Viewed Products", tags = { "Statistics" })
     @GetMapping(value = "/products/top5Viewed", produces = "application/json")
     public List<Product> getTop5MostViewedProducts() {
-        List<Product> products = productDbService.findAll();
+        List<Product> products = (productDbService.findAll() == null)? new ArrayList<>() : productDbService.findAll();
         products.sort(Comparator.comparing(Product::getTimesQueried).reversed());
         if (products.size() <= 5) {
             return products;
@@ -103,7 +104,8 @@ public class StatisticsController {
     @GetMapping(value = "/salesPerCategory", produces = "application/json")
     public List<CategoryStatDTO> listSalesPerCategory() {
         List<Category> categories = categoryDbService.findAll();
-        return categories.stream().map(CategoryStatDTO::new).collect(Collectors.toList());
+        return (categories == null) ?
+                new ArrayList<>() : categories.stream().map(CategoryStatDTO::new).collect(Collectors.toList());
     }
 
     private <T, U extends Comparable<U>> Optional<List<T>> sortList(String order, List<T> list, Function<T, U> keyExtractor) {

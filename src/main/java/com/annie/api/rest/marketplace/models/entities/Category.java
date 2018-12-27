@@ -27,6 +27,9 @@ public class Category {
 
     @JsonIgnore
     public int getRevenue() {
+        if (products == null) {
+            return 0;
+        }
         return products.stream().mapToInt(Product::getRevenue).sum();
     }
 }

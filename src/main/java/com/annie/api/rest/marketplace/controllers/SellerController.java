@@ -30,7 +30,7 @@ public class SellerController {
 
     @ApiOperation(value = "Get Seller", tags = { "Seller" })
     @GetMapping(value = "/seller/{id}", produces = "application/json")
-    public ResponseEntity<Seller> getSellerById(@PathVariable long id) {
+    public ResponseEntity<Seller> getSellerById(@PathVariable(value = "id") long id) {
         Seller sellerToGet = sellerDbService.findById(id);
         if (sellerToGet == null) {
             return ResponseEntity.notFound().build();
@@ -99,6 +99,6 @@ public class SellerController {
         sellerToModify.setEmail(sellerDTO.getEmail());
         sellerToModify.setPhoneNumber(sellerDTO.getPhoneNumber());
         sellerDbService.save(sellerToModify);
-        return new ResponseEntity<>(sellerToModify, HttpStatus.CREATED);
+        return new ResponseEntity<>(sellerToModify, HttpStatus.OK);
     }
 }

@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,6 +89,9 @@ public class ProductController {
         Seller seller = sellerDbService.findById(id);
         if (seller == null) {
             return ResponseEntity.notFound().build();
+        }
+        if (seller.getProducts() == null) {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         }
         return new ResponseEntity<>(seller.getProducts().stream()
                 .map(ProductsStatDTO::new).collect(Collectors.toList()), HttpStatus.OK);

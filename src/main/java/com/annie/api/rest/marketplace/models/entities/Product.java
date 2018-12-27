@@ -25,7 +25,7 @@ public class Product {
     private int price;
     @Column(nullable = false)
     private int stock;
-    private int salesUnit;
+    @Builder.Default private int salesUnit = 0;
     @Builder.Default private int timesQueried = 0;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")

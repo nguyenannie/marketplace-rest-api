@@ -10,9 +10,7 @@ import java.util.List;
 @Service
 public interface ProductDbService {
 
-    List<Product> findBySeller(Seller seller);
     List<Product> findAll();
-    List<Product> findByCategory(Category category);
     void save(Product product);
     Product findById(long id);
     void delete(long id);

@@ -60,7 +60,10 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "Delete Category", tags = { "Category" })
-    @ApiResponse(code = 404, message = "Not Found")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 200, message = "OK", response = Category.class)
+    })
     @DeleteMapping(value = "/category/{name}", produces = "application/json")
     public ResponseEntity<Object> deleteCategory(@PathVariable String name) {
         Category categoryToDelete = categoryDbService.findByName(name);

@@ -1,8 +1,6 @@
 package com.annie.api.rest.marketplace.services.implementations;
 
-import com.annie.api.rest.marketplace.models.entities.Category;
 import com.annie.api.rest.marketplace.models.entities.Product;
-import com.annie.api.rest.marketplace.models.entities.Seller;
 import com.annie.api.rest.marketplace.repositories.ProductRepo;
 import com.annie.api.rest.marketplace.services.interfaces.ProductDbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +19,8 @@ public class ProductDbServiceImpl implements ProductDbService {
     }
 
     @Override
-    public List<Product> findBySeller(Seller seller) {
-        return productRepo.findBySeller(seller);
-    }
-
-    @Override
     public List<Product> findAll() {
         return productRepo.findAll();
-    }
-
-    @Override
-    public List<Product> findByCategory(Category category) {
-        return productRepo.findByCategory(category);
     }
 
     @Override

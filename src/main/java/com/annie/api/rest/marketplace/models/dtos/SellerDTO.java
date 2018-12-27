@@ -1,5 +1,6 @@
 package com.annie.api.rest.marketplace.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class SellerDTO {
     private String phoneNumber;
     private String address;
 
+    @JsonIgnore
     public boolean isValid() {
         return firstName != null && !firstName.isEmpty() &&
                 lastName != null && !lastName.isEmpty() &&

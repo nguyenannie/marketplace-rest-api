@@ -23,7 +23,7 @@ public class Seller {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
     private String address;
     private String phoneNumber;
@@ -36,16 +36,25 @@ public class Seller {
 
     @JsonIgnore
     public int getRevenue() {
+        if (products == null) {
+            return 0;
+        }
         return products.stream().mapToInt(Product::getRevenue).sum();
     }
 
     @JsonIgnore
     public int getSalesUnit() {
+        if (products == null) {
+            return 0;
+        }
         return products.stream().mapToInt(Product::getSalesUnit).sum();
     }
 
     @JsonIgnore
     public double getAverageRating() {
+        if (ratings == null) {
+            return 0;
+        }
         return ratings.stream().mapToDouble(Rating::getRate).average().orElse(0);
     }
 }
