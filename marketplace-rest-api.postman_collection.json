@@ -1,0 +1,940 @@
+{
+	"info": {
+		"_postman_id": "79e45d18-1443-40ae-bf4a-86c2ac6a7103",
+		"name": "marketplace-rest-api",
+		"description": "All endpoint calls for marketplace rest api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save A Seller",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"string\",\n  \"email\": \"string\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"phoneNumber\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/seller",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"seller"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Sellers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/sellers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"sellers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Seller By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6369440f-2eab-45af-94c7-a082e703711b",
+						"exec": [
+							"pm.environment.set(\"random_id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "11f5c89a-cc6b-4b85-8dc2-eaadc507ccdc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/seller/{{random_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"seller",
+						"{{random_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Seller By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "14f903c3-adcf-4a9b-b475-31eb48b34786",
+						"exec": [
+							"pm.environment.set(\"id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"new address\",\n  \"email\": \"new email\",\n  \"firstName\": \"new firstname\",\n  \"lastName\": \"new lastname\",\n  \"phoneNumber\": \"new phoneNumber\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/seller/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"seller",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Seller By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fb4c7500-7683-4287-97fa-f3e492b98776",
+						"exec": [
+							"pm.environment.set(\"id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/seller/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"seller",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order List of Products By Sales (ascending)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/products/sales?order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"products",
+						"sales"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order List of Products By Sales (descending)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/products/sales?order=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"products",
+						"sales"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Products with Sales Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/products/salesData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"products",
+						"salesData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Top 5 Most Viewed Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/products/top5Viewed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"products",
+						"top5Viewed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Total Sales Per Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/salesPerCategory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"salesPerCategory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order List of Sellers By Average Rating (ascending)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/sellers/rating?order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"sellers",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order List of Sellers By Average Rating (descending)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/sellers/rating?order=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"sellers",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Sellers with Sales Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/sellers/salesData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"sellers",
+						"salesData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Top 5 Sellers By Revenue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/stat/sellers/top5Revenue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"stat",
+						"sellers",
+						"top5Revenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rating of a Seller",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ff3c6ee8-d0f9-4182-85ec-09a343d064cc",
+						"exec": [
+							"pm.environment.set(\"random_seller_id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/rating/seller/{{random_seller_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"rating",
+						"seller",
+						"{{random_seller_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rate a Seller",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9782f05c-3018-4685-91f6-7e85900ebe7c",
+						"exec": [
+							"pm.environment.set(\"seller_id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"feedback\": \"string\",\n  \"rate\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/rating/seller/{{seller_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"rating",
+						"seller",
+						"{{seller_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Products Belonged to a Seller",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7afa7a6a-f7f3-4530-a31a-b038c9ca0991",
+						"exec": [
+							"pm.environment.set(\"random_seller_id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/products/seller/{{random_seller_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"products",
+						"seller",
+						"{{random_seller_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"string\",\n  \"description\": \"string\",\n  \"name\": \"string\",\n  \"price\": 0,\n  \"sellerId\": 0,\n  \"stock\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3a7947d5-f8c2-4b96-a42d-b13dc8a0ba93",
+						"exec": [
+							"pm.environment.set(\"random_id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/product/{{random_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"product",
+						"{{random_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Product by Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f5bcfff1-eccd-44e9-9715-559fa952d9a4",
+						"exec": [
+							"pm.environment.set(\"id\", _.random(1, 20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"string\",\n  \"description\": \"string\",\n  \"name\": \"string\",\n  \"price\": 0,\n  \"sellerId\": 0,\n  \"stock\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/product/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"product",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "47b704be-6a02-4514-8048-3f465fabaaa5",
+						"exec": [
+							"pm.environment.set(\"id\", _.random(1, 43));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/product/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"product",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy a Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/buy?productId=16&quantity=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"buy"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "16"
+						},
+						{
+							"key": "quantity",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category By Name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "94cc370e-f450-4347-8f23-ae0935c0b276",
+						"exec": [
+							"pm.environment.set(\"name\", \"cat\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/category/{{name}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"category",
+						"{{name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Category",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8bf76e9f-372e-4318-bce1-8ef90665e67a",
+						"exec": [
+							"pm.environment.set(\"name\", \"new category\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/category/{{name}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"category",
+						"{{name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Category",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1c40c156-18bd-48ec-b72a-e45b010bcb02",
+						"exec": [
+							"pm.environment.set(\"name\", \"category name\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/marketplace/api/category/{{name}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"marketplace",
+						"api",
+						"category",
+						"{{name}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
