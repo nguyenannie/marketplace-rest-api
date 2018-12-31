@@ -35,6 +35,9 @@ dependencies {
     runtime('mysql:mysql-connector-java')
     implementation('io.springfox:springfox-swagger2:2.9.2')
     implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    /*
+    For deployment on Heroku
     implementation('org.postgresql:postgresql')
     implementation group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+    */
 }

@@ -45,3 +45,6 @@ Inside the folder of the project, execute command:
 - Swagger API interface can be accessed at:
 `http://localhost:8080/marketplace/api/swagger-ui.html`
 
+## Live Version
+- You can try the live version which is hosted on Heroku at [https://marketplace-rest-api.herokuapp.com/marketplace/api/swagger-ui.html] . It may take 1 to 2 minutes for the first call.
+
