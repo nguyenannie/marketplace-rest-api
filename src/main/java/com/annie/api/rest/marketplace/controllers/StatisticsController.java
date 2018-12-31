@@ -57,7 +57,7 @@ public class StatisticsController {
     @ApiOperation(value = "Order List of Products By Sales", tags = { "Statistics" })
     @GetMapping(value = "/products/sales", produces = "application/json")
     public ResponseEntity<List<Product>> getProductsBySales(@RequestParam(value = "order") String order) {
-        Optional<List<Product>> sortedProduct = sortList(order, productDbService.findAll(), Product::getSalesUnit);
+        Optional<List<Product>> sortedProduct = sortWithParam(order, productDbService.findAll(), Product::getSalesUnit);
         return toResponse(sortedProduct);
     }
 
@@ -73,7 +73,7 @@ public class StatisticsController {
     public ResponseEntity<List<SellerStatDTO>> getSellersByRating(@RequestParam(value = "order") String order) {
         List<Seller> sellers = (sellerDbService.findAll() == null) ? new ArrayList<>() : sellerDbService.findAll();
         List<SellerStatDTO> sellerStatDTOS = sellers.stream().map(SellerStatDTO::new).collect(Collectors.toList());
-        Optional<List<SellerStatDTO>> sortedSellers = sortList(order, sellerStatDTOS, SellerStatDTO::getAverageRating);
+        Optional<List<SellerStatDTO>> sortedSellers = sortWithParam(order, sellerStatDTOS, SellerStatDTO::getAverageRating);
         return toResponse(sortedSellers);
     }
 
@@ -108,7 +108,11 @@ public class StatisticsController {
                 new ArrayList<>() : categories.stream().map(CategoryStatDTO::new).collect(Collectors.toList());
     }
 
-    private <T, U extends Comparable<U>> Optional<List<T>> sortList(String order, List<T> list, Function<T, U> keyExtractor) {
+    private <T, U extends Comparable<U>> Optional<List<T>> sortWithParam(
+            String order,
+            List<T> list,
+            Function<T, U> keyExtractor
+    ) {
         Comparator<T> c;
         if (order.equals("asc")) {
             c = Comparator.comparing(keyExtractor);

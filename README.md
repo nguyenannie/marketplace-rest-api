@@ -18,11 +18,13 @@ mysql> use DATABASE_NAME;
 
 mysql> SET autocommit=0 ; source marketplace_db.sql ; COMMIT ;
 ```
-3. Set up the following environmental variables (or edit the env_variable.sh file and execute it `. ./env_variable.sh`):
+3. Set up the following environmental variables (or edit the env_variable.sh file and source it `. ./env_variable.sh`):
 - DATABASE_NAME: name of the database
 - DATABASE_URL: url of the database (`DATABASE_URL="jdbc:mysql://localhost/${DATABASE_NAME}?useSSL=false"`)
 - DATABASE_USERNAME: username of the database
 - DATABASE_PASSWORD: password of the database
+
+If app is ran from Intellij, set the environment variables in the run/edit configurations. 
 
 ## Run
 Inside the folder of the project, execute command:
@@ -37,7 +39,7 @@ Inside the folder of the project, execute command:
 ```
 - Calling endpoints manually from Postman: 
   - Import Collection from file `marketplace-rest-api.postman_collection.json`
-  - Edit variables from pre-request script for some **GET/DELETE** method and body from some **POST/PUT** method
+  - Edit variables from pre-request script for some **GET/DELETE** methods and body from some **POST/PUT** methods
   
 ## API Interface
 - Swagger API interface can be accessed at:
